@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { useScramble } from "use-scramble";
 import { SCRAMBLE_CONFIG } from "@/lib/scramble-config";
-import { HeroPortrait } from "./HeroPortrait";
+import { MEDIA } from "@/lib/media";
+
+const GITHUB = "https://github.com/NIkhil-cmd-cmd";
+const LINKEDIN = "https://linkedin.com/in/nikhil-krishnaswamy";
 
 export function Hero({ reduceMotion = false }: { reduceMotion?: boolean }) {
   const [mounted, setMounted] = useState(false);
@@ -26,7 +29,7 @@ export function Hero({ reduceMotion = false }: { reduceMotion?: boolean }) {
 
   return (
     <section className="hero" aria-label="Introduction">
-      <div className="hero-layout">
+      <div className="hero-layout hero-layout--solo">
         <div className="hero-copy">
           <h1 className="hero-title">
             {reduceMotion ? (
@@ -40,19 +43,50 @@ export function Hero({ reduceMotion = false }: { reduceMotion?: boolean }) {
               </>
             )}
           </h1>
-          <p
-            className={`hero-subtitle${mounted ? " animate-hero-subtitle" : ""}`}
+          <div
+            className={`hero-meta${mounted ? " animate-hero-meta" : ""}`}
           >
-            studying cs + ee @ stanford
-          </p>
-          <a
-            className={`hero-email${mounted ? " animate-hero-email" : ""}`}
-            href="mailto:nikhilk0@stanford.edu"
-          >
-            nikhilk0 [at] stanford [dot] edu
-          </a>
+            <p className="hero-subtitle">studying cs + ee @ stanford</p>
+            <a
+              className="hero-email"
+              href="mailto:nikhilk0@stanford.edu"
+            >
+              nikhilk0 [at] stanford [dot] edu
+            </a>
+            <nav className="hero-links" aria-label="Profile links">
+              <a
+                className="hero-link"
+                href={GITHUB}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github ↗
+              </a>
+              <span className="hero-link-sep" aria-hidden>
+                ·
+              </span>
+              <a
+                className="hero-link"
+                href={LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                linkedin ↗
+              </a>
+              <span className="hero-link-sep" aria-hidden>
+                ·
+              </span>
+              <a
+                className="hero-link"
+                href={MEDIA.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                resume ↗
+              </a>
+            </nav>
+          </div>
         </div>
-        <HeroPortrait />
       </div>
     </section>
   );

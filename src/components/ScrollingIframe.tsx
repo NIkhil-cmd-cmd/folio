@@ -28,7 +28,7 @@ export function ScrollingIframe({ src, title, playing }: ScrollingIframeProps) {
     if (!wrap) return;
     maxScrollRef.current = Math.max(
       120,
-      wrap.clientHeight * (IFRAME_OVERSCAN - 1)
+      wrap.clientHeight * (IFRAME_OVERSCAN - 1),
     );
   }, [src, playing]);
 
@@ -59,12 +59,12 @@ export function ScrollingIframe({ src, title, playing }: ScrollingIframeProps) {
   }, [playing, src]);
 
   return (
-    <div className="iframe-scroll-port">
+    <div className="preview-iframe-port">
       <iframe
         ref={iframeRef}
         src={src}
         title={title}
-        className="hover-card-iframe scrolling"
+        className="preview-iframe"
         loading="lazy"
         sandbox="allow-scripts allow-same-origin allow-popups"
         referrerPolicy="no-referrer"

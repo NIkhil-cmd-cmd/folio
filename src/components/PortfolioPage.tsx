@@ -4,12 +4,22 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Header } from "./Header";
 import { Hero } from "./Hero";
 import { PortfolioSection } from "./PortfolioSection";
-import { MediaHoverRow, type HoverRowItem } from "./MediaHoverRow";
+import {
+  MediaHoverRow,
+  hoverRowId,
+  type HoverRowItem,
+} from "./MediaHoverRow";
 import { HoverPreviewPanel } from "./HoverPreviewPanel";
 import { CursorGlow } from "./CursorGlow";
 import { SmoothScroll } from "./SmoothScroll";
 import { TextLink } from "./TextLink";
-import { awards, currentlyItems, projects, researchItems } from "@/lib/data";
+import {
+  awards,
+  currentlyItems,
+  projects,
+  researchItems,
+} from "@/lib/data";
+import { MEDIA } from "@/lib/media";
 
 export function PortfolioPage() {
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -50,7 +60,7 @@ export function PortfolioPage() {
   const rowProps = (item: HoverRowItem) => ({
     item,
     reduceMotion,
-    isActive: previewItem?.mediaFolder === item.mediaFolder,
+    isActive: previewItem ? hoverRowId(previewItem) === hoverRowId(item) : false,
     onActivate: activate,
     onDeactivate: scheduleHide,
   });
@@ -79,7 +89,7 @@ export function PortfolioPage() {
           >
             <div className="hover-list">
               {currentlyItems.map((item) => (
-                <MediaHoverRow key={item.mediaFolder} {...rowProps(item)} />
+                <MediaHoverRow key={hoverRowId(item)} {...rowProps(item)} />
               ))}
             </div>
           </PortfolioSection>
@@ -91,7 +101,7 @@ export function PortfolioPage() {
           >
             <div className="hover-list">
               {researchItems.map((item) => (
-                <MediaHoverRow key={item.mediaFolder} {...rowProps(item)} />
+                <MediaHoverRow key={hoverRowId(item)} {...rowProps(item)} />
               ))}
             </div>
           </PortfolioSection>
@@ -101,9 +111,9 @@ export function PortfolioPage() {
             label="PROJECTS"
             reduceMotion={reduceMotion}
           >
-            <div className="hover-list">
+            <div className="hover-list hover-list--projects">
               {projects.map((item) => (
-                <MediaHoverRow key={item.mediaFolder} {...rowProps(item)} />
+                <MediaHoverRow key={hoverRowId(item)} {...rowProps(item)} />
               ))}
             </div>
           </PortfolioSection>
@@ -153,6 +163,12 @@ export function PortfolioPage() {
               </span>
               <TextLink href="mailto:krishnaswamynikhil@gmail.com" mailto>
                 email
+              </TextLink>
+              <span className="footer-sep" aria-hidden="true">
+                ·
+              </span>
+              <TextLink href={MEDIA.resume} external>
+                resume
               </TextLink>
             </nav>
           </footer>

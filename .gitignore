@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local-only media (GitHub 100MB file limit; keep files on disk for dev/Vercel)
+public/media/projects/**/*.mov
+public/media/projects/**/*.MOV
+public/media/projects/**/*.mp4
+public/media/projects/**/*.MP4
+public/media/research/**/*.mov
+public/media/research/**/*.MOV
+public/media/research/**/*.mp4
+public/media/research/**/*.MP4
+public/media/currently/**/*.mov
+public/media/currently/**/*.MOV
+public/media/currently/**/*.mp4
+public/media/currently/**/*.MP4

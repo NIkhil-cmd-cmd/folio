@@ -1,8 +1,15 @@
-Drop media into these folders:
+Drop media into these folders (screen recordings stay local — see repo .gitignore; add to Vercel manually or use Blob for production):
 
-profile/          → photo.jpg (or photo.png) — hero portrait
-projects/*/       → cover.jpg or cover.png — hover card image
-                  → preview.mp4 (optional) — hover card video
-research/*/       → same as projects
-currently/spezi/    → same (spezi.stanford.edu uses iframe on hover)
-currently/simr/     → same (simr.stanford.edu uses iframe on hover)
+profile/              → profile.png — hero portrait (halftone)
+projects/*/           → screen recording + optional cover
+  solo/               → preview.mp4 (or solo.MP4) — iPhone mock on hover
+  vinyl/              → preview.mp4 — iPhone mock on hover
+  neuropod/           → preview.mp4 — iPhone mock on hover
+  atlas/              → atlas.MP4 or preview.mp4 — iPhone mock on hover
+  share-on/           → preview.mp4 — iPhone mock on hover
+  tokns/              → cover.jpg — web iframe preview
+  openhive/           → cover.jpg — web iframe preview
+  */cover.jpg|.png    → fallback still inside iPhone frame
+research/*/           → cover.jpg + optional preview.mp4
+currently/spezi/      → cover (spezi uses iframe on hover)
+currently/simr/       → cover (simr uses iframe on hover)

@@ -6,18 +6,28 @@ import { SCRAMBLE_CONFIG } from "@/lib/scramble-config";
 import { TextLink } from "./TextLink";
 
 export type HoverRowItem = {
+  /** Stable key for hover state (defaults to mediaFolder). */
+  id?: string;
   index: string;
   title?: string;
   body?: React.ReactNode;
   href?: string;
   /** When set, hover preview embeds this URL in an iframe (defaults to href). */
   previewUrl?: string;
+  /** Scrollable PDF in the hover panel. */
+  previewPdf?: string;
   mediaFolder: string;
   description: string;
   byline?: string;
   scrambleTitle?: boolean;
-  variant?: "project" | "entry";
+  variant?: "project" | "entry" | "press";
+  /** Device mockup for app screen recordings. */
+  previewDevice?: "iphone" | "mac" | "default";
 };
+
+export function hoverRowId(item: HoverRowItem): string {
+  return item.id ?? item.mediaFolder;
+}
 
 type MediaHoverRowProps = {
   item: HoverRowItem;
@@ -37,6 +47,7 @@ export function MediaHoverRow({
   const [isMobile, setIsMobile] = useState(false);
 
   const isProject = item.variant === "project" && item.title;
+  const isPress = item.variant === "press" && item.title;
 
   const { ref, replay } = useScramble({
     ...SCRAMBLE_CONFIG,
@@ -81,13 +92,23 @@ export function MediaHoverRow({
           </span>
         )}
       </h3>
+    ) : isPress && item.title ? (
+      <h3 className="press-title">
+        {item.href ? (
+          <TextLink href={item.href} external className="press-title-link">
+            {item.title}
+          </TextLink>
+        ) : (
+          item.title
+        )}
+      </h3>
     ) : null;
 
   return (
     <article
       className={`hover-row${isProject ? " hover-row-project" : ""}${
-        isActive ? " active" : ""
-      }`}
+        isPress ? " hover-row-press" : ""
+      }${isActive ? " active" : ""}`}
       onMouseEnter={handleRowEnter}
       onMouseLeave={handleRowLeave}
       onClick={handleRowClick}
