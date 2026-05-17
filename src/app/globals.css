@@ -373,7 +373,7 @@ a.award-name.text-link,
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 32px;
+  gap: 40px;
 }
 
 .hero-copy {
@@ -386,11 +386,11 @@ a.award-name.text-link,
 }
 
 .hero-portrait-dither {
-  width: 160px;
-  height: 160px;
-  border-radius: 12px;
+  width: 280px;
+  height: 320px;
+  border-radius: 14px;
   border: 1px solid var(--surface-border);
-  box-shadow: 0 8px 32px var(--shadow-card);
+  box-shadow: 0 12px 40px var(--shadow-card);
   overflow: hidden;
   background: var(--bg-secondary);
 }
@@ -616,9 +616,9 @@ a.award-name.text-link,
     order: -1;
   }
 
-  .hero-portrait {
-    width: 120px;
-    height: 120px;
+  .hero-portrait-dither {
+    width: 200px;
+    height: 240px;
   }
 
   #cursor-glow {

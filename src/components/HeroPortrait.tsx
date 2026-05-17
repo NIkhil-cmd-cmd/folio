@@ -29,9 +29,11 @@ export function HeroPortrait() {
         colorMode="duotone"
         primaryColor="#C41E3A"
         secondaryColor={secondaryColor}
-        gridSize={3}
-        threshold={0.48}
-        contrast={1.1}
+        gridSize={1}
+        pixelRatio={1}
+        threshold={0.44}
+        contrast={1.05}
+        brightness={0.02}
         objectFit="cover"
         className="hero-portrait-dither"
         backgroundColor="transparent"
