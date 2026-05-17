@@ -40,6 +40,10 @@ interface DitherShaderProps {
   animationSpeed?: number;
   /** Additional CSS classes for the container (use this to set size via Tailwind) */
   className?: string;
+  /** Halftone wavelength — lower values = smaller dots (default: gridSize * 2) */
+  halftoneScale?: number;
+  /** When true, canvas uses crisp/pixelated scaling (off for fine halftone portraits) */
+  pixelatedRendering?: boolean;
 }
 
 // 4x4 Bayer matrix for ordered dithering
@@ -111,6 +115,8 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
   animated = false,
   animationSpeed = 0.02,
   className,
+  halftoneScale,
+  pixelatedRendering = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -193,7 +199,7 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
               break;
             case "halftone": {
               const angle = Math.PI / 4;
-              const scale = gridSize * 2;
+              const scale = halftoneScale ?? Math.max(1, gridSize * 2);
               const rotX = x * Math.cos(angle) + y * Math.sin(angle);
               const rotY = -x * Math.sin(angle) + y * Math.cos(angle);
               const pattern =
@@ -302,6 +308,7 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
       contrast,
       backgroundColor,
       threshold,
+      halftoneScale,
     ],
   );
 
@@ -449,7 +456,9 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full"
-        style={{ imageRendering: "pixelated" }}
+        style={{
+          imageRendering: pixelatedRendering ? "pixelated" : "auto",
+        }}
         aria-label="Dithered image"
         role="img"
       />

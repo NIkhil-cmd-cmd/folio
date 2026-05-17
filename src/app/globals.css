@@ -395,6 +395,10 @@ a.award-name.text-link,
   background: var(--bg-secondary);
 }
 
+.hero-portrait-dither canvas {
+  image-rendering: auto !important;
+}
+
 .hero-title {
   font-family: var(--font-display);
   font-style: italic;

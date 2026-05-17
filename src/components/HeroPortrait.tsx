@@ -31,9 +31,11 @@ export function HeroPortrait() {
         secondaryColor={secondaryColor}
         gridSize={1}
         pixelRatio={1}
-        threshold={0.44}
-        contrast={1.05}
-        brightness={0.02}
+        halftoneScale={0.35}
+        pixelatedRendering={false}
+        threshold={0.42}
+        contrast={1.08}
+        brightness={0.03}
         objectFit="cover"
         className="hero-portrait-dither"
         backgroundColor="transparent"
