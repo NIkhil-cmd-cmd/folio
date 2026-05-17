@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useScramble } from "use-scramble";
 import { SCRAMBLE_CONFIG } from "@/lib/scramble-config";
-import { MEDIA } from "@/lib/media";
 import { TextLink } from "./TextLink";
 
 export type HoverRowItem = {
@@ -21,13 +20,19 @@ export type HoverRowItem = {
 type MediaHoverRowProps = {
   item: HoverRowItem;
   reduceMotion?: boolean;
+  isActive?: boolean;
+  onActivate?: (item: HoverRowItem) => void;
+  onDeactivate?: () => void;
 };
 
-export function MediaHoverRow({ item, reduceMotion = false }: MediaHoverRowProps) {
-  const [active, setActive] = useState(false);
+export function MediaHoverRow({
+  item,
+  reduceMotion = false,
+  isActive = false,
+  onActivate,
+  onDeactivate,
+}: MediaHoverRowProps) {
   const [isMobile, setIsMobile] = useState(false);
-  const [imgSrc, setImgSrc] = useState(`${item.mediaFolder}/cover.jpg`);
-  const [useVideo, setUseVideo] = useState(false);
 
   const isProject = item.variant === "project" && item.title;
 
@@ -39,63 +44,25 @@ export function MediaHoverRow({ item, reduceMotion = false }: MediaHoverRowProps
   });
 
   useEffect(() => {
-    setIsMobile(window.matchMedia("(max-width: 640px)").matches);
+    setIsMobile(window.matchMedia("(max-width: 900px)").matches);
   }, []);
 
-  useEffect(() => {
-    setImgSrc(`${item.mediaFolder}/cover.jpg`);
-    setUseVideo(false);
-
-    fetch(`${item.mediaFolder}/preview.mp4`, { method: "HEAD" })
-      .then((res) => {
-        if (res.ok) setUseVideo(true);
-      })
-      .catch(() => {});
-  }, [item.mediaFolder]);
-
   const handleRowEnter = () => {
-    if (!isMobile) setActive(true);
+    if (!isMobile) onActivate?.(item);
     if (!reduceMotion && item.scrambleTitle && item.title) replay();
   };
 
   const handleRowLeave = () => {
-    if (!isMobile) setActive(false);
+    if (!isMobile) onDeactivate?.();
   };
 
   const handleRowClick = () => {
     if (isMobile) {
-      setActive((v) => !v);
+      if (isActive) onDeactivate?.();
+      else onActivate?.(item);
       if (!reduceMotion && item.scrambleTitle && item.title) replay();
     }
   };
-
-  const handleImgError = () => {
-    const png = `${item.mediaFolder}/cover.png`;
-    if (imgSrc.endsWith("cover.jpg")) {
-      setImgSrc(png);
-      return;
-    }
-    setImgSrc(MEDIA.placeholder);
-  };
-
-  const mediaBlock = useVideo ? (
-    <video
-      src={`${item.mediaFolder}/preview.mp4`}
-      className="hover-card-media"
-      autoPlay
-      muted
-      loop
-      playsInline
-    />
-  ) : (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={imgSrc}
-      alt=""
-      className="hover-card-media"
-      onError={handleImgError}
-    />
-  );
 
   const titleContent =
     isProject && item.title ? (
@@ -117,7 +84,7 @@ export function MediaHoverRow({ item, reduceMotion = false }: MediaHoverRowProps
   return (
     <article
       className={`hover-row${isProject ? " hover-row-project" : ""}${
-        active ? " active" : ""
+        isActive ? " active" : ""
       }`}
       onMouseEnter={handleRowEnter}
       onMouseLeave={handleRowLeave}
@@ -126,18 +93,9 @@ export function MediaHoverRow({ item, reduceMotion = false }: MediaHoverRowProps
       <span className="item-index">{item.index}</span>
       <div className="hover-row-body">
         {titleContent}
-        {item.body && <div className="item-content entry-body">{item.body}</div>}
-        <div className="hover-card-wrapper">
-          <div className="hover-card" role="tooltip">
-            {mediaBlock}
-            <div className="hover-card-text">
-              {item.byline && (
-                <p className="hover-card-byline">{item.byline}</p>
-              )}
-              <p className="hover-card-desc">{item.description}</p>
-            </div>
-          </div>
-        </div>
+        {item.body ? (
+          <div className="item-content entry-body">{item.body}</div>
+        ) : null}
       </div>
     </article>
   );
