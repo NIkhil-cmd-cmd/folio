@@ -4,4 +4,5 @@ profile/          → photo.jpg (or photo.png) — hero portrait
 projects/*/       → cover.jpg or cover.png — hover card image
                   → preview.mp4 (optional) — hover card video
 research/*/       → same as projects
-currently/*/       → same as projects
+currently/spezi/    → same (spezi.stanford.edu uses iframe on hover)
+currently/simr/     → same (simr.stanford.edu uses iframe on hover)

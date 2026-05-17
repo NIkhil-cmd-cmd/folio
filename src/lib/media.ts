@@ -1,7 +1,7 @@
 /** Base path under /public/media — drop files into each folder (see folder README). */
 
 export const MEDIA = {
-  profile: "/media/profile/photo.jpg",
+  profile: "/media/profile/profile.png",
   placeholder: "/media/placeholder.svg",
   projects: {
     tokns: "/media/projects/tokns",
@@ -17,7 +17,6 @@ export const MEDIA = {
   currently: {
     spezi: "/media/currently/spezi",
     simr: "/media/currently/simr",
-    opentslm: "/media/currently/opentslm",
   },
 } as const;
 

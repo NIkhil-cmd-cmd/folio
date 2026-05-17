@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react";
 import { useScramble } from "use-scramble";
 import { SCRAMBLE_CONFIG } from "@/lib/scramble-config";
-import { MEDIA } from "@/lib/media";
 import { TextLink } from "./TextLink";
+import { HeroPortrait } from "./HeroPortrait";
 
 export function Hero({ reduceMotion = false }: { reduceMotion?: boolean }) {
   const [mounted, setMounted] = useState(false);
-  const [portraitSrc, setPortraitSrc] = useState<string>(MEDIA.profile);
-  const [showPortrait, setShowPortrait] = useState(true);
 
   const prefix = useScramble({
     ...SCRAMBLE_CONFIG,
@@ -56,25 +54,7 @@ export function Hero({ reduceMotion = false }: { reduceMotion?: boolean }) {
             nikhilk0@stanford.edu
           </TextLink>
         </div>
-        {showPortrait && (
-          <div className="hero-portrait-wrap animate-hero-subtitle">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={portraitSrc}
-              alt="Nikhil Krishnaswamy"
-              width={160}
-              height={160}
-              className="hero-portrait"
-              onError={() => {
-                if (portraitSrc.endsWith(".jpg")) {
-                  setPortraitSrc("/media/profile/photo.png");
-                  return;
-                }
-                setShowPortrait(false);
-              }}
-            />
-          </div>
-        )}
+        <HeroPortrait />
       </div>
     </section>
   );

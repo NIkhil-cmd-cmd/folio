@@ -6,6 +6,8 @@ export const currentlyItems: HoverRowItem[] = [
   {
     index: "01",
     variant: "entry",
+    href: "https://spezi.stanford.edu/",
+    previewUrl: "https://spezi.stanford.edu/",
     mediaFolder: MEDIA.currently.spezi,
     description:
       "Building iOS modules for Stanford's open-source digital health platform.",
@@ -21,6 +23,8 @@ export const currentlyItems: HoverRowItem[] = [
   {
     index: "02",
     variant: "entry",
+    href: "https://simr.stanford.edu/",
+    previewUrl: "https://simr.stanford.edu/",
     mediaFolder: MEDIA.currently.simr,
     description:
       "Teaching and mentoring high schoolers in Stanford's BioE summer design program.",
@@ -31,19 +35,6 @@ export const currentlyItems: HoverRowItem[] = [
           SIMR
         </TextLink>
         , a BioE program for high schoolers
-      </>
-    ),
-  },
-  {
-    index: "03",
-    variant: "entry",
-    mediaFolder: MEDIA.currently.opentslm,
-    description:
-      "Time-series language models for clinical reasoning over multivariate medical data.",
-    body: (
-      <>
-        building OpenTSLM — integrating time-series language models for clinical
-        reasoning over multivariate medical data
       </>
     ),
   },
@@ -67,6 +58,8 @@ export const researchItems: HoverRowItem[] = [
   {
     index: "02",
     variant: "entry",
+    href: "https://simr.stanford.edu/",
+    previewUrl: "https://simr.stanford.edu/",
     mediaFolder: MEDIA.research.fnirs,
     description:
       "Portable fNIRS device for MDD patients — custom PCB at 78.88mm × 43.26mm, dual-wavelength IR.",
@@ -101,6 +94,7 @@ export const projects: HoverRowItem[] = [
     variant: "project",
     title: "tokn$",
     href: "https://www.tokns.space/",
+    previewUrl: "https://www.tokns.space/",
     mediaFolder: MEDIA.projects.tokns,
     byline: "marketplace · api credits",
     scrambleTitle: true,
@@ -132,6 +126,7 @@ export const projects: HoverRowItem[] = [
     variant: "project",
     title: "openhive",
     href: "https://hivemind-agi.vercel.app/",
+    previewUrl: "https://hivemind-agi.vercel.app/",
     mediaFolder: MEDIA.projects.openhive,
     byline: "multi-agent · shared memory",
     scrambleTitle: true,

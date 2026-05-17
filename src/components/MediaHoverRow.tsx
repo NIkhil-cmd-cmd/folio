@@ -10,6 +10,8 @@ export type HoverRowItem = {
   title?: string;
   body?: React.ReactNode;
   href?: string;
+  /** When set, hover preview embeds this URL in an iframe (defaults to href). */
+  previewUrl?: string;
   mediaFolder: string;
   description: string;
   byline?: string;
