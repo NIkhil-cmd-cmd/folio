@@ -50,7 +50,7 @@ export function ProjectRow({ project, reduceMotion = false }: ProjectRowProps) {
 
   const titleInner = (
     <span ref={ref} className="project-title-text">
-      {reduceMotion ? project.title : null}
+      {project.title}
     </span>
   );
 
