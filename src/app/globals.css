@@ -405,6 +405,15 @@ a.award-name.text-link,
   flex-shrink: 0;
 }
 
+.interactive-portrait {
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.interactive-portrait .hero-portrait-dither {
+  pointer-events: none;
+}
+
 .hero-portrait-dither {
   width: min(380px, 42vw);
   height: min(440px, 48vw);

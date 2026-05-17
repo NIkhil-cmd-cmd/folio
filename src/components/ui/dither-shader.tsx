@@ -48,6 +48,14 @@ interface DitherShaderProps {
   removeBackground?: false | "chroma-green" | "alpha";
   /** 0–1, higher = more aggressive green removal */
   chromaStrength?: number;
+  /** Skip light halftone pixels when removing background (off in dark mode for full face) */
+  skipLightHalftone?: boolean;
+  /** Mouse position in canvas coords for interactive particles */
+  mouse?: { x: number; y: number; active: boolean } | null;
+  /** Radius of cursor influence on particles */
+  interactRadius?: number;
+  /** Accent color for particles near cursor */
+  interactColor?: string;
 }
 
 function isGreenScreenPixel(
@@ -155,6 +163,10 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
   pixelatedRendering = true,
   removeBackground = false,
   chromaStrength = 0.55,
+  skipLightHalftone = true,
+  mouse = null,
+  interactRadius = 100,
+  interactColor = "#C41E3A",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -174,7 +186,10 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
 
   const parsedPrimaryColor = parseColor(primaryColor);
   const parsedSecondaryColor = parseColor(secondaryColor);
+  const parsedInteractColor = parseColor(interactColor);
   const parsedCustomPalette = customPalette.map(parseColor);
+  const mouseRef = useRef(mouse);
+  mouseRef.current = mouse;
 
   const applyDithering = useCallback(
     (
@@ -236,7 +251,16 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
           b = clamp((b - 128) * contrast + 128 + brightness * 255, 0, 255);
 
           // Calculate luminance
-          const luminance = getLuminance(r, g, b) / 255;
+          let luminance = getLuminance(r, g, b) / 255;
+
+          const pointer = mouseRef.current;
+          if (pointer?.active) {
+            const dist = Math.hypot(x - pointer.x, y - pointer.y);
+            if (dist < interactRadius) {
+              const pull = 1 - dist / interactRadius;
+              luminance -= pull * 0.28;
+            }
+          }
 
           // Get dither threshold based on mode
           let ditherThreshold: number;
@@ -288,9 +312,37 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
             }
             case "duotone": {
               const shouldBeDark = luminance < ditherThreshold;
-              if (!shouldBeDark && removeBackground) {
+              if (!shouldBeDark && removeBackground && skipLightHalftone) {
                 continue;
               }
+
+              const pointer = mouseRef.current;
+              if (pointer?.active) {
+                const dist = Math.hypot(x - pointer.x, y - pointer.y);
+                if (dist < interactRadius * 0.85) {
+                  const pull = 1 - dist / (interactRadius * 0.85);
+                  if (pull > 0.15) {
+                    outputColor = [
+                      Math.round(
+                        parsedPrimaryColor[0] * (1 - pull) +
+                          parsedInteractColor[0] * pull
+                      ),
+                      Math.round(
+                        parsedPrimaryColor[1] * (1 - pull) +
+                          parsedInteractColor[1] * pull
+                      ),
+                      Math.round(
+                        parsedPrimaryColor[2] * (1 - pull) +
+                          parsedInteractColor[2] * pull
+                      ),
+                    ];
+                    ctx.fillStyle = `rgb(${outputColor[0]}, ${outputColor[1]}, ${outputColor[2]})`;
+                    ctx.fillRect(x, y, effectivePixelSize, effectivePixelSize);
+                    continue;
+                  }
+                }
+              }
+
               outputColor = shouldBeDark
                 ? parsedPrimaryColor
                 : parsedSecondaryColor;
@@ -364,8 +416,28 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
       halftoneScale,
       removeBackground,
       chromaStrength,
+      skipLightHalftone,
+      interactRadius,
+      interactColor,
+      primaryColor,
+      secondaryColor,
     ],
   );
+
+  const redraw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || dimensions.width === 0 || !imageDataRef.current) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+    ctx.resetTransform();
+    ctx.scale(dpr, dpr);
+    applyDithering(ctx, dimensions.width, dimensions.height, 0);
+  }, [applyDithering, dimensions]);
+
+  useEffect(() => {
+    redraw();
+  }, [mouse, redraw]);
 
   // Setup resize observer for responsive sizing
   useEffect(() => {
