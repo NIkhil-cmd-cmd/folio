@@ -388,11 +388,8 @@ a.award-name.text-link,
 .hero-portrait-dither {
   width: 280px;
   height: 320px;
-  border-radius: 14px;
-  border: 1px solid var(--surface-border);
-  box-shadow: 0 12px 40px var(--shadow-card);
-  overflow: hidden;
-  background: var(--bg-secondary);
+  background: transparent;
+  overflow: visible;
 }
 
 .hero-portrait-dither canvas {

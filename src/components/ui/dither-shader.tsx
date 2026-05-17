@@ -44,6 +44,28 @@ interface DitherShaderProps {
   halftoneScale?: number;
   /** When true, canvas uses crisp/pixelated scaling (off for fine halftone portraits) */
   pixelatedRendering?: boolean;
+  /** Skip background pixels (transparent). "chroma-green" keys out foliage/green screens. */
+  removeBackground?: false | "chroma-green" | "alpha";
+  /** 0–1, higher = more aggressive green removal */
+  chromaStrength?: number;
+}
+
+function isGreenScreenPixel(
+  r: number,
+  g: number,
+  b: number,
+  strength: number,
+): boolean {
+  const maxRb = Math.max(r, b);
+  const greenDominance = g - maxRb;
+  const minGreen = 60 + strength * 40;
+  if (g < minGreen) return false;
+  if (greenDominance < 12 + strength * 28) return false;
+  if (g > r * (1.05 + strength * 0.35) && g > b * (1.05 + strength * 0.25)) {
+    return true;
+  }
+  const chroma = g - (r + b) / 2;
+  return chroma > 18 + strength * 35;
 }
 
 // 4x4 Bayer matrix for ordered dithering
@@ -117,6 +139,8 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
   className,
   halftoneScale,
   pixelatedRendering = true,
+  removeBackground = false,
+  chromaStrength = 0.55,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -173,12 +197,24 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
           const srcY = Math.floor((y / displayHeight) * sourceHeight);
           const srcIdx = (srcY * sourceWidth + srcX) * 4;
 
-          let r = sourceData[srcIdx] || 0;
-          let g = sourceData[srcIdx + 1] || 0;
-          let b = sourceData[srcIdx + 2] || 0;
+          const srcR = sourceData[srcIdx] || 0;
+          const srcG = sourceData[srcIdx + 1] || 0;
+          const srcB = sourceData[srcIdx + 2] || 0;
           const a = sourceData[srcIdx + 3] || 0;
 
-          if (a < 10) continue; // Skip fully transparent pixels
+          if (removeBackground === "alpha" && a < 128) continue;
+          if (a < 10) continue;
+
+          if (
+            removeBackground === "chroma-green" &&
+            isGreenScreenPixel(srcR, srcG, srcB, chromaStrength)
+          ) {
+            continue;
+          }
+
+          let r = srcR;
+          let g = srcG;
+          let b = srcB;
 
           // Apply brightness and contrast
           r = clamp((r - 128) * contrast + 128 + brightness * 255, 0, 255);
@@ -238,6 +274,9 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
             }
             case "duotone": {
               const shouldBeDark = luminance < ditherThreshold;
+              if (!shouldBeDark && removeBackground) {
+                continue;
+              }
               outputColor = shouldBeDark
                 ? parsedPrimaryColor
                 : parsedSecondaryColor;
@@ -309,6 +348,8 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
       backgroundColor,
       threshold,
       halftoneScale,
+      removeBackground,
+      chromaStrength,
     ],
   );
 
