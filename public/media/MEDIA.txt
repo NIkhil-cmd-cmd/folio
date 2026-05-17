@@ -1,0 +1,7 @@
+Drop media into these folders:
+
+profile/          → photo.jpg (or photo.png) — hero portrait
+projects/*/       → cover.jpg or cover.png — hover card image
+                  → preview.mp4 (optional) — hover card video
+research/*/       → same as projects
+currently/*/       → same as projects
