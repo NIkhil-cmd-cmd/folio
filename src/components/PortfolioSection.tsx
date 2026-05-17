@@ -52,13 +52,28 @@ export function PortfolioSection({
       ref={sectionRef}
       className={`portfolio-section ${className}`.trim()}
     >
-      <div className="section-label">
-        <ScrambleText
-          text={`${number} — ${label}`}
-          triggerOnView
-          disabled={reduceMotion}
-        />
-      </div>
+      <header className="section-header">
+        <span
+          className="section-index"
+          aria-hidden="true"
+        >
+          <ScrambleText
+            text={number}
+            triggerOnView
+            disabled={reduceMotion}
+            className="section-index-glitch"
+          />
+        </span>
+        <div className="section-heading">
+          <span className="section-slash">/</span>
+          <ScrambleText
+            text={label}
+            triggerOnView
+            disabled={reduceMotion}
+            className="section-label-text"
+          />
+        </div>
+      </header>
       <div className="section-content">{children}</div>
     </section>
   );

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { HoverRowItem } from "./MediaHoverRow";
 import { MEDIA } from "@/lib/media";
+import { ScrollingIframe } from "./ScrollingIframe";
 
 type HoverPreviewPanelProps = {
   item: HoverRowItem | null;
@@ -22,7 +23,6 @@ export function HoverPreviewPanel({
   const [imgSrc, setImgSrc] = useState<string>(MEDIA.placeholder);
   const [useVideo, setUseVideo] = useState(false);
   const [iframeFailed, setIframeFailed] = useState(false);
-
   const embedUrl = item ? getEmbedUrl(item) : undefined;
   const showIframe = Boolean(embedUrl) && !iframeFailed;
 
@@ -55,14 +55,10 @@ export function HoverPreviewPanel({
     item?.title ?? item?.description.slice(0, 48) ?? "Preview";
 
   const mediaContent = showIframe ? (
-    <iframe
-      src={embedUrl}
+    <ScrollingIframe
+      src={embedUrl!}
       title={`${previewLabel} preview`}
-      className="hover-card-iframe"
-      loading="lazy"
-      sandbox="allow-scripts allow-same-origin allow-popups"
-      referrerPolicy="no-referrer"
-      onError={() => setIframeFailed(true)}
+      playing={showIframe}
     />
   ) : useVideo && item ? (
     <video

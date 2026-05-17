@@ -7,6 +7,7 @@ import { PortfolioSection } from "./PortfolioSection";
 import { MediaHoverRow, type HoverRowItem } from "./MediaHoverRow";
 import { HoverPreviewPanel } from "./HoverPreviewPanel";
 import { CursorGlow } from "./CursorGlow";
+import { SmoothScroll } from "./SmoothScroll";
 import { TextLink } from "./TextLink";
 import { awards, currentlyItems, projects, researchItems } from "@/lib/data";
 
@@ -17,7 +18,7 @@ export function PortfolioPage() {
 
   useEffect(() => {
     setReduceMotion(
-      window.matchMedia("(prefers-reduced-div: reduce)").matches
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
   }, []);
 
@@ -55,7 +56,7 @@ export function PortfolioPage() {
   });
 
   return (
-    <>
+    <SmoothScroll>
       <CursorGlow />
       <Header />
       <main
@@ -163,6 +164,6 @@ export function PortfolioPage() {
           onPointerLeave={scheduleHide}
         />
       </main>
-    </>
+    </SmoothScroll>
   );
 }

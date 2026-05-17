@@ -17,7 +17,7 @@ export function HeroPortrait() {
         halftoneScale={0.35}
         pixelatedRendering={false}
         removeBackground="chroma-green"
-        chromaStrength={0.5}
+        chromaStrength={0.78}
         threshold={0.42}
         contrast={1.08}
         brightness={0.03}

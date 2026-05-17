@@ -56,16 +56,30 @@ function isGreenScreenPixel(
   b: number,
   strength: number,
 ): boolean {
-  const maxRb = Math.max(r, b);
-  const greenDominance = g - maxRb;
-  const minGreen = 60 + strength * 40;
-  if (g < minGreen) return false;
-  if (greenDominance < 12 + strength * 28) return false;
-  if (g > r * (1.05 + strength * 0.35) && g > b * (1.05 + strength * 0.25)) {
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const sat = max === 0 ? 0 : (max - min) / max;
+
+  const greenDominance = g - Math.max(r, b);
+  const minGreen = 45 + strength * 35;
+  const dominanceCutoff = 6 + strength * 22;
+
+  if (g >= minGreen && greenDominance >= dominanceCutoff) {
+    if (g > r * (1.02 + strength * 0.2) && g > b * (1.02 + strength * 0.15)) {
+      return true;
+    }
+  }
+
+  if (g === max && sat > 0.12 + strength * 0.15 && greenDominance > 8) {
     return true;
   }
+
   const chroma = g - (r + b) / 2;
-  return chroma > 18 + strength * 35;
+  if (chroma > 12 + strength * 30) return true;
+
+  const foliageHue =
+    g > 70 && r < g * (0.92 - strength * 0.08) && b < g * (0.88 - strength * 0.06);
+  return foliageHue;
 }
 
 // 4x4 Bayer matrix for ordered dithering

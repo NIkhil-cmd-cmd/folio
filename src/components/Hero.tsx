@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useScramble } from "use-scramble";
 import { SCRAMBLE_CONFIG } from "@/lib/scramble-config";
-import { TextLink } from "./TextLink";
 import { HeroPortrait } from "./HeroPortrait";
 
 export function Hero({ reduceMotion = false }: { reduceMotion?: boolean }) {
@@ -46,13 +45,12 @@ export function Hero({ reduceMotion = false }: { reduceMotion?: boolean }) {
           >
             studying cs + ee @ stanford
           </p>
-          <TextLink
-            href="mailto:nikhilk0@stanford.edu"
-            mailto
+          <a
             className={`hero-email${mounted ? " animate-hero-email" : ""}`}
+            href="mailto:nikhilk0@stanford.edu"
           >
-            nikhilk0@stanford.edu
-          </TextLink>
+            nikhilk0 [at] stanford [dot] edu
+          </a>
         </div>
         <HeroPortrait />
       </div>
