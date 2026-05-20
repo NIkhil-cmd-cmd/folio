@@ -22,8 +22,26 @@ export const currentlyItems: HoverRowItem[] = [
     ),
   },
   {
-    id: "currently-simr",
+    id: "currently-agi",
     index: "02",
+    variant: "entry",
+    href: "https://www.theagi.company/",
+    previewUrl: "https://www.theagi.company/",
+    mediaFolder: MEDIA.currently.agi,
+    description:
+      "Interning at AGI Inc — engineering agentic phone control for iOS.",
+    body: (
+      <>
+        engineering iOS phone control @{" "}
+        <TextLink href="https://www.theagi.company/" external>
+          AGI Inc
+        </TextLink>
+      </>
+    ),
+  },
+  {
+    id: "currently-simr",
+    index: "03",
     variant: "entry",
     href: "https://simr.stanford.edu/",
     previewUrl: "https://simr.stanford.edu/",
@@ -66,15 +84,13 @@ export const researchItems: HoverRowItem[] = [
     href: "https://simr.stanford.edu/",
     previewUrl: "https://simr.stanford.edu/",
     mediaFolder: MEDIA.research.fnirs,
-    description:
-      "Portable fNIRS device for MDD patients — custom PCB at 78.88mm × 43.26mm, dual-wavelength IR.",
+    description: "Portable fNIRS device for MDD patients.",
     body: (
       <>
         prototyped a portable fNIRS device for MDD patients @ stanford{" "}
         <TextLink href="https://simr.stanford.edu/" external>
           SIMR
-        </TextLink>{" "}
-        — custom PCB, 78.88mm × 43.26mm, dual wavelength IR
+        </TextLink>
       </>
     ),
   },
@@ -108,16 +124,6 @@ export const projects: HoverRowItem[] = [
   {
     index: "02",
     variant: "project",
-    title: "vinyl",
-    mediaFolder: MEDIA.projects.vinyl,
-    previewDevice: "mac",
-    scrambleTitle: true,
-    description:
-      "vinyl-inspired music player for Mac — spin records, scrub grooves, and browse albums like a physical collection",
-  },
-  {
-    index: "03",
-    variant: "project",
     title: "neuropod",
     href: "https://www.epilepsyassociation.com/epilepsyu/cupertino-high-students-create-award-winning-seizure-monitoring-device",
     mediaFolder: MEDIA.projects.neuropod,
@@ -127,7 +133,7 @@ export const projects: HoverRowItem[] = [
       "wearable EEG device and companion app that records brain activity and predicts seizures up to 30 minutes early",
   },
   {
-    index: "04",
+    index: "03",
     variant: "project",
     title: "tokn$",
     href: "https://www.tokns.space/",
@@ -138,7 +144,7 @@ export const projects: HoverRowItem[] = [
       "the airbnb for api credits — buy, sell, and trade unused API quota across providers",
   },
   {
-    index: "05",
+    index: "04",
     variant: "project",
     title: "atlas",
     mediaFolder: MEDIA.projects.atlas,
@@ -148,7 +154,7 @@ export const projects: HoverRowItem[] = [
       "agentic AI for navigation and trip planning — natural language to full itineraries",
   },
   {
-    index: "06",
+    index: "05",
     variant: "project",
     title: "share-on",
     mediaFolder: MEDIA.projects["share-on"],
@@ -158,7 +164,7 @@ export const projects: HoverRowItem[] = [
       "productivity and mental health app for teens — shared focus sessions and mood tracking",
   },
   {
-    index: "07",
+    index: "06",
     variant: "project",
     title: "openhive",
     href: "https://hivemind-agi.vercel.app/",

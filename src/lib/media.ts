@@ -20,6 +20,7 @@ export const MEDIA = {
   },
   currently: {
     spezi: "/media/currently/spezi",
+    agi: "/media/currently/agi",
     simr: "/media/currently/simr",
   },
   press: {
@@ -57,6 +58,7 @@ export function previewVideo(folder: string): string {
 /** Candidate screen-recording paths (checked in order). */
 export function previewVideoCandidates(folder: string): string[] {
   const slug = folder.split("/").pop() ?? "";
+  const slugFlat = slug.replace(/-/g, "");
   return [
     `${folder}/preview.mp4`,
     `${folder}/preview.MP4`,
@@ -64,8 +66,13 @@ export function previewVideoCandidates(folder: string): string[] {
     `${folder}/${slug}.mp4`,
     `${folder}/${slug}.MP4`,
     `${folder}/${slug}.mov`,
+    `${folder}/${slugFlat}.mp4`,
+    `${folder}/${slugFlat}.MP4`,
+    `${folder}/${slugFlat}.mov`,
     `${folder}/${slug}musicplayer.mov`,
     `${folder}/${slug}musicplayer.MOV`,
+    `${folder}/${slugFlat}musicplayer.mov`,
+    `${folder}/${slugFlat}musicplayer.MOV`,
   ];
 }
 

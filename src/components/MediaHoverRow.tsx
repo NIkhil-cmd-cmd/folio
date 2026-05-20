@@ -23,6 +23,8 @@ export type HoverRowItem = {
   variant?: "project" | "entry" | "press";
   /** Device mockup for app screen recordings. */
   previewDevice?: "iphone" | "mac" | "default";
+  /** Scale video/image to fit without cropping (no device frame). */
+  previewFit?: "cover" | "contain";
 };
 
 export function hoverRowId(item: HoverRowItem): string {

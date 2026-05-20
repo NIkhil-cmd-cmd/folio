@@ -276,7 +276,7 @@ body {
 
 .preview-card {
   border: 1px solid var(--surface-border);
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background: var(--surface);
 }
@@ -290,55 +290,73 @@ body {
   overflow: hidden;
 }
 
-.preview-card-media--loading {
-  opacity: 0.6;
+.preview-card--device .preview-card-media {
+  height: 420px;
+  background: color-mix(in srgb, var(--bg-secondary) 70%, transparent);
 }
 
-.preview-card-body {
-  padding: 14px 16px 16px;
+.preview-card--iframe .preview-card-media,
+.preview-card--link .preview-card-media {
+  height: 340px;
+}
+
+.preview-card-media--loading {
+  opacity: 0.55;
+}
+
+.preview-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  padding: 10px 14px 12px;
   border-top: 1px solid var(--surface-border);
 }
 
-.preview-card-title {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: var(--text-lg);
-  color: var(--text-primary);
-  margin: 0 0 4px;
-  line-height: 1.15;
+.preview-card--media-only .preview-card-footer {
+  display: none;
 }
 
-.preview-card-byline {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--accent);
-  margin: 0 0 8px;
-  letter-spacing: 0.04em;
+.preview-card--device .preview-card-footer,
+.preview-card--iframe .preview-card-footer {
+  padding: 8px 14px 10px;
+  justify-content: flex-end;
+  border-top: none;
+}
+
+.preview-card-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  margin-right: auto;
 }
 
 .preview-card-desc {
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  margin: 0 0 12px;
-  line-height: 1.45;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+  flex: 1 1 100%;
 }
 
-.preview-card-actions {
-  display: flex;
-  gap: 14px;
+.preview-card--device .preview-card-desc,
+.preview-card--iframe .preview-card-desc {
+  display: none;
 }
 
 .preview-card-link {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--accent);
+  font-size: 0.65rem;
+  color: var(--text-muted);
   text-decoration: none;
+  letter-spacing: 0.02em;
+  margin-left: auto;
 }
 
 .preview-card-link:hover {
-  text-decoration: underline;
-  color: var(--text-primary);
+  color: var(--accent);
 }
 
 /* Phone (Eldora frame + media behind) */
@@ -371,7 +389,11 @@ body {
 .phone-preview-empty {
   width: 100%;
   height: 100%;
-  background: var(--bg);
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--bg-secondary) 80%, #000) 0%,
+    var(--bg) 100%
+  );
 }
 
 .phone-preview-frame {
@@ -432,7 +454,38 @@ body {
   width: 100%;
   height: 100%;
   min-height: 120px;
-  background: var(--bg-secondary);
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--bg-secondary) 80%, #000) 0%,
+    var(--bg) 100%
+  );
+}
+
+.preview-card--contain {
+  border: none;
+  background: transparent;
+}
+
+.preview-card--contain .preview-card-media {
+  height: 400px;
+  background: transparent;
+  border-radius: 0;
+}
+
+.preview-card--contain .preview-card-footer {
+  border-top: none;
+  padding-top: 6px;
+}
+
+.preview-card-media--contain {
+  background: transparent;
+}
+
+.preview-fill-media--contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 /* Full-bleed image / video */
@@ -461,21 +514,26 @@ body {
 }
 
 .link-preview-cover--empty {
-  background: linear-gradient(160deg, var(--bg-secondary), var(--bg));
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--accent) 12%, var(--bg-secondary)),
+    var(--bg)
+  );
 }
 
 .link-preview-meta {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-top: 1px solid var(--surface-border);
   background: var(--surface);
 }
 
 .link-preview-favicon {
-  border-radius: 6px;
+  border-radius: 5px;
   flex-shrink: 0;
+  opacity: 0.85;
 }
 
 .link-preview-text {
@@ -483,21 +541,21 @@ body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .link-preview-host {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 .link-preview-title {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -506,8 +564,8 @@ body {
 
 .link-preview-cta {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--accent);
+  font-size: 0.6rem;
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 

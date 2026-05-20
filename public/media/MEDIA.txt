@@ -1,15 +1,21 @@
-Drop media into these folders (screen recordings stay local — see repo .gitignore; add to Vercel manually or use Blob for production):
+Drop media into these folders:
 
 profile/              → profile.png — hero portrait (halftone)
 projects/*/           → screen recording + optional cover
-  solo/               → preview.mp4 (or solo.MP4) — iPhone mock on hover
-  vinyl/              → preview.mp4 — iPhone mock on hover
-  neuropod/           → preview.mp4 — iPhone mock on hover
+  solo/               → solo.mov or preview.mp4 — iPhone mock on hover
+  vinyl/              → vinylmusicplayer.mov — full video, scale-to-fit (no frame)
+  neuropod/           → neuropod.mov or preview.mp4 — iPhone mock on hover
   atlas/              → atlas.MP4 or preview.mp4 — iPhone mock on hover
-  share-on/           → preview.mp4 — iPhone mock on hover
-  tokns/              → cover.jpg — web iframe preview
+  share-on/           → shareon.MP4 or preview.mp4 — iPhone mock on hover
+  tokns/              → tokns.png — web iframe preview
   openhive/           → cover.jpg — web iframe preview
   */cover.jpg|.png    → fallback still inside iPhone frame
 research/*/           → cover.jpg + optional preview.mp4
 currently/spezi/      → cover (spezi uses iframe on hover)
+currently/agi/        → cover (agi uses iframe on hover)
 currently/simr/       → cover (simr uses iframe on hover)
+
+Git / deploy notes:
+  • Videos under 100MB can be committed (solo, neuropod, share-on, atlas).
+  • vinylmusicplayer.mov is ~231MB — gitignored; compress or upload to Vercel manually.
+  • To shrink a recording: ffmpeg -i in.mov -vcodec h264 -crf 28 -preset slow out.mp4

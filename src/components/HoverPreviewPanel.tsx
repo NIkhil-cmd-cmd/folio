@@ -28,12 +28,6 @@ function previewLabel(item: HoverRowItem): string {
   return item.title ?? item.description.slice(0, 80);
 }
 
-/** Description in the card — not duplicated by the list row body. */
-function cardDescription(item: HoverRowItem): string | undefined {
-  if (item.body) return undefined;
-  return item.description;
-}
-
 export function HoverPreviewPanel({
   item,
   onPointerEnter,
@@ -80,18 +74,22 @@ export function HoverPreviewPanel({
 
   const link = visitUrl(item);
   const label = previewLabel(item);
-  const description = cardDescription(item);
   const imageSrc = imgSrc !== MEDIA.placeholder ? imgSrc : undefined;
   const hasVideo = Boolean(videoSrc);
   const hasImage = Boolean(imageSrc);
   const hasPdf = Boolean(item.previewPdf);
-  const embedSrc =
-    link && isEmbeddableUrl(link) ? link : undefined;
+  const embedSrc = link && isEmbeddableUrl(link) ? link : undefined;
   const showLinkCard = Boolean(link && !embedSrc);
+  const isDeviceMock =
+    item.previewDevice === "iphone" || item.previewDevice === "mac";
+  const isFitPreview = item.previewFit === "contain";
+  const isProject = item.variant === "project";
 
   let media: ReactNode = null;
+  let mediaKind: "device" | "iframe" | "pdf" | "link" | "fill" | null = null;
 
   if (hasPdf) {
+    mediaKind = "pdf";
     media = (
       <object
         data={item.previewPdf}
@@ -101,12 +99,10 @@ export function HoverPreviewPanel({
       />
     );
   } else if (hasVideo) {
+    mediaKind = "device";
     if (item.previewDevice === "iphone") {
       media = (
-        <PhonePreview
-          videoSrc={videoSrc ?? undefined}
-          imageSrc={undefined}
-        />
+        <PhonePreview videoSrc={videoSrc ?? undefined} imageSrc={undefined} />
       );
     } else if (item.previewDevice === "mac") {
       media = (
@@ -117,10 +113,11 @@ export function HoverPreviewPanel({
         />
       );
     } else {
+      mediaKind = "fill";
       media = (
         <video
           src={videoSrc!}
-          className="preview-fill-media"
+          className={`preview-fill-media${isFitPreview ? " preview-fill-media--contain" : ""}`}
           autoPlay
           muted
           loop
@@ -129,41 +126,69 @@ export function HoverPreviewPanel({
       );
     }
   } else if (embedSrc) {
+    mediaKind = "iframe";
     media = <ScrollingIframe src={embedSrc} title={label} playing />;
   } else if (hasImage) {
     if (item.previewDevice === "iphone") {
+      mediaKind = "device";
       media = <PhonePreview imageSrc={imageSrc} />;
     } else if (item.previewDevice === "mac") {
+      mediaKind = "device";
       media = (
-        <DesktopPreview
-          imageSrc={imageSrc}
-          label={item.title ?? "app"}
-        />
+        <DesktopPreview imageSrc={imageSrc} label={item.title ?? "app"} />
       );
     } else {
-      media = <img src={imageSrc} alt="" className="preview-fill-media" />;
+      mediaKind = "fill";
+      media = (
+        <img
+          src={imageSrc}
+          alt=""
+          className={`preview-fill-media${isFitPreview ? " preview-fill-media--contain" : ""}`}
+        />
+      );
     }
   } else if (showLinkCard && link) {
+    mediaKind = "link";
     media = (
-      <LinkPreview
-        href={link}
-        title={label}
-        coverSrc={imageSrc}
-      />
+      <LinkPreview href={link} title={label} coverSrc={imageSrc} />
     );
+  } else if (isDeviceMock) {
+    mediaKind = "device";
+    media =
+      item.previewDevice === "mac" ? (
+        <DesktopPreview label={item.title ?? "app"} />
+      ) : (
+        <PhonePreview />
+      );
   }
 
   const hasMedia = Boolean(media);
-  const hasActions = Boolean(
-    item.previewPdf ||
-      (link && embedSrc) ||
-      (link && (hasVideo || hasImage) && !showLinkCard),
-  );
-  const showBody = Boolean(description || hasActions);
+  const showVisit =
+    Boolean(link) &&
+    !showLinkCard &&
+    (hasPdf || mediaKind === "iframe" || mediaKind === "device" || hasVideo || hasImage);
+  const showDesc =
+    !isDeviceMock &&
+    mediaKind !== "iframe" &&
+    mediaKind !== "link" &&
+    !item.body &&
+    Boolean(item.description);
+  const showFooter = Boolean(isProject && item.title) || showDesc || showVisit;
 
-  if (!hasMedia && !showBody) {
+  if (!hasMedia && !showFooter) {
     return <aside className="preview-panel" aria-hidden aria-live="polite" />;
   }
+
+  const cardClass = [
+    "preview-card",
+    mediaKind === "device" ? "preview-card--device" : "",
+    mediaKind === "iframe" ? "preview-card--iframe" : "",
+    mediaKind === "link" ? "preview-card--link" : "",
+    isFitPreview ? "preview-card--contain" : "",
+    !showFooter ? "preview-card--media-only" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <aside
@@ -172,45 +197,47 @@ export function HoverPreviewPanel({
       onMouseEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
     >
-      <div
-        className={`preview-card${hasMedia ? "" : " preview-card--text"}`}
-        key={item.id ?? item.mediaFolder}
-      >
+      <div className={cardClass} key={item.id ?? item.mediaFolder}>
         {hasMedia ? (
           <div
-            className={`preview-card-media${loading ? " preview-card-media--loading" : ""}`}
+            className={[
+              "preview-card-media",
+              loading ? "preview-card-media--loading" : "",
+              isFitPreview ? "preview-card-media--contain" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
           >
             {media}
           </div>
         ) : null}
-        {showBody ? (
-          <div className="preview-card-body">
-            {description ? (
-              <p className="preview-card-desc">{description}</p>
+        {showFooter ? (
+          <div className="preview-card-footer">
+            {isProject && item.title ? (
+              <span className="preview-card-label">{item.title}</span>
             ) : null}
-            {hasActions ? (
-              <div className="preview-card-actions">
-                {item.previewPdf ? (
-                  <a
-                    href={item.previewPdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="preview-card-link"
-                  >
-                    pdf ↗
-                  </a>
-                ) : null}
-                {link && (embedSrc || hasVideo || hasImage) ? (
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="preview-card-link"
-                  >
-                    visit ↗
-                  </a>
-                ) : null}
-              </div>
+            {showDesc ? (
+              <p className="preview-card-desc">{item.description}</p>
+            ) : null}
+            {showVisit && link ? (
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="preview-card-link"
+              >
+                visit ↗
+              </a>
+            ) : null}
+            {item.previewPdf ? (
+              <a
+                href={item.previewPdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="preview-card-link"
+              >
+                pdf ↗
+              </a>
             ) : null}
           </div>
         ) : null}
