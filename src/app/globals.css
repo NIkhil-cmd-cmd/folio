@@ -26,8 +26,8 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-size: 12.5px;
-  line-height: 1.75;
+  font-size: 15.5px;
+  line-height: 1.7;
   letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
 }
@@ -36,7 +36,7 @@ main {
   display: flex;
   gap: 6rem;
   align-items: flex-start;
-  max-width: 72rem;
+  max-width: 76rem;
   min-height: 100vh;
   padding: 5rem;
 }
@@ -44,7 +44,7 @@ main {
 aside {
   position: sticky;
   top: 5rem;
-  flex: 0 0 11rem;
+  flex: 0 0 13rem;
 }
 
 h1 {
@@ -63,7 +63,7 @@ nav {
   flex: 1;
   flex-direction: column;
   gap: 4rem;
-  max-width: 40rem;
+  max-width: 44rem;
 }
 
 section {
@@ -78,7 +78,7 @@ section {
 }
 
 .num {
-  flex: 0 0 1.5rem;
+  flex: 0 0 1.9rem;
   color: var(--muted);
 }
 
