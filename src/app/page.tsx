@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { getEssays } from "@/lib/essays";
+
 const GITHUB = "https://github.com/NIkhil-cmd-cmd";
 const LINKEDIN = "https://linkedin.com/in/nikhil-krishnaswamy";
 const EMAIL = "nikhilk0@stanford.edu";
@@ -19,12 +22,15 @@ function Item({ n, children }: { n: string; children: React.ReactNode }) {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const hasEssays = (await getEssays()).length > 0;
+
   return (
     <main>
       <aside>
         <h1>nikhil krishnaswamy</h1>
         <nav>
+          {hasEssays ? <Link href="/essays">essays</Link> : null}
           <a href={`mailto:${EMAIL}`}>email</a>
           <Out href={GITHUB}>github</Out>
           <Out href={LINKEDIN}>linkedin</Out>

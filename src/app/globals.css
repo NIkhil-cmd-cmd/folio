@@ -1,17 +1,9 @@
 :root {
-  --bg: #fbfaf8;
-  --fg: #1c1b1a;
-  --muted: #9b9896;
-  --rule: #e2dfdb;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #17161a;
-    --fg: #e8e6e3;
-    --muted: #6f6c69;
-    --rule: #2a2830;
-  }
+  color-scheme: dark;
+  --bg: #0e0d10;
+  --fg: #e7e5e2;
+  --muted: #6d6a72;
+  --rule: #23212a;
 }
 
 * {
@@ -50,6 +42,14 @@ aside {
 h1 {
   font-size: inherit;
   font-weight: 400;
+}
+
+h1 a {
+  text-decoration: none;
+}
+
+h1 a:hover {
+  color: var(--muted);
 }
 
 nav {
@@ -130,4 +130,72 @@ a:hover {
   .col {
     gap: 3rem;
   }
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.here {
+  color: var(--muted);
+}
+
+.prose {
+  gap: 2.5rem;
+  max-width: 36rem;
+}
+
+.prose header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.prose h2 {
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.prose h3 {
+  margin-top: 2.5rem;
+  font-size: inherit;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.prose p + p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose pre {
+  margin-top: 1.5rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+}
+
+.prose li + li {
+  margin-top: 0.5rem;
+}
+
+.prose blockquote {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--rule);
+  color: var(--muted);
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--rule);
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.prose hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
 }
