@@ -1,46 +1,20 @@
 import type { Metadata } from "next";
-import { ThemeScript } from "@/components/ThemeScript";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const mono = JetBrains_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nikhil Krishnaswamy",
-  description:
-    "Stanford CS + EE student, researcher, and builder — portfolio of projects, research, and awards.",
-  openGraph: {
-    title: "Nikhil Krishnaswamy",
-    description:
-      "Stanford CS + EE student, researcher, and builder.",
-  },
+  description: "Building Memorable, procedural memory for agents. CS + EE @ Stanford.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
-      <head>
-        <ThemeScript />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500&family=Instrument+Serif:ital@0;1&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body>
-        <div id="cursor-glow" className="hidden" aria-hidden="true" />
-        {children}
-      </body>
+    <html lang="en" className={mono.className}>
+      <body>{children}</body>
     </html>
   );
 }
