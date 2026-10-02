@@ -6,9 +6,6 @@ function Out({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
       {children}
-      <span className="arrow" aria-hidden="true">
-        ↗
-      </span>
     </a>
   );
 }
@@ -38,46 +35,27 @@ export default function Home() {
       <div className="col">
         <section>
           <Item n="01">
-            i build memory for agents. right now that is{" "}
-            <Out href="https://memorable.sh">memorable</Out>, procedural memory:
-            an agent records how a task was actually done, then replays that
-            procedure next time instead of relearning it.
+            i build memory for agents.{" "}
+            <Out href="https://memorable.sh">memorable</Out> records how a task
+            was actually done, then replays that procedure next time instead of
+            relearning it.
           </Item>
           <Item n="02">cs + ee @ stanford</Item>
-          <Item n="03">
-            before agents i built brain hardware. eeg wearables, fnirs, seizure
-            prediction. same instinct, different substrate.
-          </Item>
         </section>
 
         <section>
           <Item n="01">
-            building <Out href="https://memorable.sh">memorable</Out>. a cli, a
-            dashboard and an mcp server, used by agents on real repos.
-          </Item>
-          <Item n="02">
             engineered agentic ios phone control @{" "}
             <Out href="https://www.theagi.company/">AGI Inc</Out>.
           </Item>
-          <Item n="03">
+          <Item n="02">
             wrote ios modules for{" "}
-            <Out href="https://github.com/StanfordSpezi">spezi</Out>, stanford&apos;s
-            open-source digital health platform.
+            <Out href="https://github.com/StanfordSpezi">spezi</Out>,
+            stanford&apos;s open-source digital health platform.
           </Item>
-        </section>
-
-        <section>
-          <Item n="01">
+          <Item n="03">
             researched seizure suppression with neural mass modeling. presented @{" "}
             <Out href="/ieee-bsn-2025.pdf">IEEE BSN 2025</Out>.
-          </Item>
-          <Item n="02">
-            prototyped a portable fnirs device for mdd patients @ stanford{" "}
-            <Out href="https://simr.stanford.edu/">simr</Out>.
-          </Item>
-          <Item n="03">
-            ran a clinical study on how tdcs brain stimulation affects speech
-            formulation.
           </Item>
         </section>
 
@@ -86,15 +64,11 @@ export default function Home() {
             <Out href="https://www.epilepsyassociation.com/epilepsyu/cupertino-high-students-create-award-winning-seizure-monitoring-device">
               neuropod
             </Out>{" "}
-            — wearable eeg and app that predicts seizures up to 30 minutes early.
+            — wearable eeg that predicts seizures up to 30 minutes early.
           </Item>
           <Item n="02">
             <Out href="https://www.tokns.space/">tokn$</Out> — a market for unused
-            api credits. buy, sell and trade quota across providers.
-          </Item>
-          <Item n="03">
-            <Out href="https://hivemind-agi.vercel.app/">openhive</Out> — shared
-            memory layer for multi-agent systems.
+            api credits.
           </Item>
         </section>
 
@@ -113,16 +87,6 @@ export default function Home() {
           </div>
           <div className="award">
             <span>best poster @ mit urtc</span>
-            <span className="year">2025</span>
-          </div>
-          <div className="award">
-            <span>state winner, samsung solve for tomorrow</span>
-            <span className="year">2025</span>
-          </div>
-          <div className="award">
-            <Out href="https://conrad.spacecenter.org/2025-winners/">
-              pete conrad challenge power pitch award
-            </Out>
             <span className="year">2025</span>
           </div>
         </section>
