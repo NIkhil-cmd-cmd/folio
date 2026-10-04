@@ -2,8 +2,8 @@ import Link from "next/link";
 import { formatDate, getEssays } from "@/lib/essays";
 
 export const metadata = {
-  title: "essays — Nikhil Krishnaswamy",
-  description: "Essays on ai and philosophy.",
+  title: "Writing — Nikhil Krishnaswamy",
+  description: "Essays on agents, philosophy and brains.",
 };
 
 export default async function Essays() {
@@ -11,29 +11,31 @@ export default async function Essays() {
 
   return (
     <main>
-      <aside>
+      <header>
         <h1>
-          <Link href="/">nikhil krishnaswamy</Link>
+          <Link href="/" className="back">
+            Nikhil Krishnaswamy
+          </Link>
         </h1>
-        <nav>
-          <span className="here">essays</span>
-        </nav>
-      </aside>
+        <h2>Writing</h2>
+      </header>
 
-      <div className="col">
-        <section className="awards">
-          {essays.length === 0 ? (
-            <p className="muted">nothing published yet.</p>
-          ) : (
-            essays.map((essay) => (
-              <div key={essay.slug} className="award">
-                <Link href={`/essays/${essay.slug}`}>{essay.title}</Link>
-                <span className="year">{formatDate(essay.date)}</span>
+      <section>
+        {essays.length === 0 ? (
+          <p className="muted">On agents, philosophy and brains. Soon.</p>
+        ) : (
+          <div className="rows">
+            {essays.map((essay) => (
+              <div key={essay.slug} className="row">
+                <p>
+                  <Link href={`/essays/${essay.slug}`}>{essay.title}</Link>
+                </p>
+                <span className="meta">{formatDate(essay.date)}</span>
               </div>
-            ))
-          )}
-        </section>
-      </div>
+            ))}
+          </div>
+        )}
+      </section>
     </main>
   );
 }

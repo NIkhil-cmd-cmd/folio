@@ -14,7 +14,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const essay = (await getEssays()).find((e) => e.slug === slug);
-  return { title: essay ? `${essay.title} — Nikhil Krishnaswamy` : "essay" };
+  return { title: essay ? `${essay.title} — Nikhil Krishnaswamy` : "Writing" };
 }
 
 export default async function Essay({
@@ -28,22 +28,19 @@ export default async function Essay({
 
   return (
     <main>
-      <aside>
+      <header>
         <h1>
-          <Link href="/">nikhil krishnaswamy</Link>
+          <Link href="/essays" className="back">
+            Writing
+          </Link>
         </h1>
-        <nav>
-          <Link href="/essays">essays</Link>
-        </nav>
-      </aside>
+        <h2>{essay.title}</h2>
+        <span className="meta" style={{ textAlign: "left" }}>
+          {formatDate(essay.date)}
+        </span>
+      </header>
 
-      <article className="col prose">
-        <header>
-          <h2>{essay.title}</h2>
-          <p className="year">{formatDate(essay.date)}</p>
-        </header>
-        <div dangerouslySetInnerHTML={{ __html: essay.html }} />
-      </article>
+      <article dangerouslySetInnerHTML={{ __html: essay.html }} />
     </main>
   );
 }
