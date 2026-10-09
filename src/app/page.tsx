@@ -1,37 +1,35 @@
+import { Links } from "@/components/Links";
 import { Rich } from "@/components/Rich";
-import { bio, groups } from "@/lib/content";
+import { Shader } from "@/components/Shader";
+import { bio, sections } from "@/lib/content";
 
 export default function Home() {
+  let n = 0;
+
   return (
-    <main>
-      <aside>
+    <main className="board">
+      <Shader />
+      <div className="top rise" style={{ "--i": 0 } as React.CSSProperties}>
         <h1>{bio.name}</h1>
         <nav>
-          <a href={`mailto:${bio.email}`}>email</a>
-          <a href={bio.github} target="_blank" rel="noopener noreferrer">
-            github
-          </a>
-          <a href={bio.linkedin} target="_blank" rel="noopener noreferrer">
-            linkedin
-          </a>
-          <a href={bio.resume} target="_blank" rel="noopener noreferrer">
-            cv
-          </a>
+          <Links />
         </nav>
-      </aside>
+      </div>
 
-      <div className="col">
-        {groups.map((group, g) => (
-          <section key={g}>
-            {group.map((line, i) => (
-              <div key={i} className="item">
-                <span className="num">{`0${i + 1}`}</span>
-                <p>
-                  <Rich text={line} />
-                </p>
-              </div>
+      <div className="cols">
+        {sections.map((s) => (
+          <div key={s.label} className="stack">
+            <span className="label">{s.label}</span>
+            {s.lines.map((line, i) => (
+              <p
+                key={i}
+                className="rise"
+                style={{ "--i": ++n } as React.CSSProperties}
+              >
+                <Rich text={line} />
+              </p>
             ))}
-          </section>
+          </div>
         ))}
       </div>
     </main>

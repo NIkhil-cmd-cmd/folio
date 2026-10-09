@@ -8,17 +8,24 @@ export const bio = {
   resume: "/resume.pdf",
 };
 
-export const groups: string[][] = [
-  [
-    "cs + neuroscience @ stanford.",
-    "co-founder @ [memorable](https://memorable.sh), YC S27. we post on [linkedin](https://www.linkedin.com/company/memorable-sh) and [x](https://x.com/memorable_sh).",
-    "ex. mts @ [AGI inc](https://www.theagi.company/).",
-    "research @ [spezi lab](https://github.com/StanfordSpezi) and the peter tass lab. seizure prediction, [presented at IEEE BSN](/ieee-bsn-2025.pdf).",
-  ],
-  [
-    "[conrad challenge](https://conrad.spacecenter.org/2025-winners/) winner.",
-    "samsung solve for tomorrow winner.",
-    "[bryan cameron](https://www.bryancameroneducationfoundation.org/scholars/finalists) finalist.",
-    "[coca-cola](https://www.coca-colascholarsfoundation.org/2026-semifinalists/) semifinalist.",
-  ],
+const stanford = "cs + neuroscience @ stanford.";
+const memorable =
+  "co-founder @ [memorable](https://memorable.sh), YC S27. [linkedin](https://www.linkedin.com/company/memorable-sh), [x](https://x.com/memorable_sh).";
+const agi = "mts @ [AGI inc](https://www.theagi.company/).";
+const ta = "ta @ [simr](https://simr.stanford.edu/) '25 and '26.";
+const interns = "intern @ solo technologies and [nextsense](https://nextsense.io/).";
+const research =
+  "research @ [spezi lab](https://github.com/StanfordSpezi) and the peter tass lab. epilepsy virtual brain modeling, [presented at IEEE BSN](/ieee-bsn-2025.pdf).";
+
+const awards = [
+  "[conrad challenge](https://conrad.spacecenter.org/2025-winners/) winner.",
+  "samsung solve for tomorrow winner.",
+  "[bryan cameron](https://www.bryancameroneducationfoundation.org/scholars/finalists) finalist.",
+  "[coca-cola](https://www.coca-colascholarsfoundation.org/2026-semifinalists/) semifinalist.",
+];
+
+export const sections: { label: string; lines: string[] }[] = [
+  { label: "currently", lines: [stanford, memorable, research] },
+  { label: "previously", lines: [agi, ta, interns] },
+  { label: "awards", lines: awards },
 ];
