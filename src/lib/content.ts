@@ -10,7 +10,7 @@ export const bio = {
 
 const stanford = "cs + neuroscience @ stanford.";
 const memorable =
-  "co-founder @ [memorable](https://memorable.sh), YC S27. [linkedin](https://www.linkedin.com/company/memorable-sh), [x](https://x.com/memorable_sh).";
+  "co-founder @ [memorable](https://memorable.sh), YC S27. [linkedin](https://www.linkedin.com/feed/update/urn:li:ugcPost:7506406323404840960/), [x](https://x.com/advaiytsane/status/2100668011673731441).";
 const agi = "mts @ [AGI inc](https://www.theagi.company/).";
 const ta = "ta @ [simr](https://simr.stanford.edu/) '25 and '26.";
 const interns = "intern @ solo technologies and [nextsense](https://nextsense.io/).";
