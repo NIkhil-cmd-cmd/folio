@@ -15,7 +15,7 @@ const agi = "mts @ [AGI inc](https://www.theagi.company/).";
 const ta = "ta @ [simr](https://simr.stanford.edu/) '25 and '26.";
 const interns = "intern @ [solo technologies](https://getsolo.tech/) and [nextsense](https://nextsense.io/).";
 const research =
-  "research @ [spezi lab](https://github.com/StanfordSpezi) and the peter tass lab. epilepsy virtual brain modeling, [presented at IEEE BSN](/ieee-bsn-2025.pdf).";
+  "research @ [spezi lab](https://github.com/StanfordSpezi) and the peter tass lab. epilepsy virtual brain modeling, [presented at IEEE BSN](/ieee-bsn-2025.pdf). on-device time-series llm, [pockettslm](https://arxiv.org/abs/2610.21308), at COLM 2026.";
 
 const awards = [
   "[conrad challenge](https://conrad.spacecenter.org/2025-winners/) winner.",
